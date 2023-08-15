@@ -15,6 +15,42 @@ void insertionSort(int arr[], int n) {
         arr[j + 1] = key;
     }
 }
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+void selectionSort(int arr[], int n){
+    for (int i = 0; i < n - 1; i++) {
+        int minIndex = i;
+        
+        // Encontra o índice do menor elemento no restante do array não ordenado
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+        
+        // Troca o elemento atual com o menor elemento encontrado
+        swap(&arr[i], &arr[minIndex]);
+    }
+}
+
+void mergeSort(){
+
+}
+
+void heapSort(){
+
+}
+
+void quickSort(){
+
+}
+
+void countingSort(){
+
+}
 
 //Função para imprimir o vetor
 void imprimeVetor(int arr[], int n){
@@ -69,7 +105,7 @@ int main(){
     int *vetorOriginal;             // Vetor que terá as posições originais de cada elemento
     int inc = 1000;    // Tamanho Inicial
     int fim = 10000000;    // Tamanho Final
-    int stp = 100000;    // Intervalo entre os Tamanhos
+    int stp = 1000000;    // Intervalo entre os Tamanhos
     int rpt = fim/stp;    // Número de repetições a serem realizadas
     //***************************************************************************************************************//
 
@@ -81,12 +117,16 @@ int main(){
     //CopiarElementosDoVetor(vetor, &vetorOriginal, tamanhoDoVetor);
     //******************************************   DEBBUGUER ******************************************//
     
-    
+    printf("[[RANDOM]]\n");
+    printf("n\tSelection\tInsertion\tMerge\tHeap\tQuick\tCounting\n");
     for(int w = 0; w < rpt; w++ ){
-        printf("Tamanho do Vetor > %d\n", inc);
+        printf("%d\t", inc);
         // Alimenta o vetor com números Randômicos
         CriaVetorComElementosRandomicos(&vetor, &vetorOriginal, &inc);
-        inc += stp;
+        inc += stp; // Incrementa a quantidade de elementos que será para a próxima iteração
+
+
+        //**************************** INSERTION-SORT *************************************************//
         for(int k = 0; k < 10; k++){
             // Iniciar a contagem de tempo
             start_time = clock();
@@ -100,12 +140,94 @@ int main(){
             
 
         }
-        printf("Tempo decorrido media final: %.6f segundos\n", calculoDeTempo/10);
+        printf("%.6f\t", calculoDeTempo/10);
+
+        //**************************** SELECTION-SORT *************************************************//
+        for(int k = 0; k < 10; k++){
+            // Iniciar a contagem de tempo
+            start_time = clock();
+            selectionSort(vetor, tamanhoDoVetor);
+            // Parar a contagem de tempo
+            end_time = clock();
+            // Calcular o tempo decorrido em segundos
+            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+            calculoDeTempo += elapsed_time;
+            CopiarElementosDoVetor(vetorOriginal, &vetor, tamanhoDoVetor);
+            
+
+        }
+        printf("%.6f\t\n", calculoDeTempo/10);
+        
+       //**************************** MERGESORT *************************************************//
+        /*for(int k = 0; k < 10; k++){
+            // Iniciar a contagem de tempo
+            start_time = clock();
+            mergeSort(vetor, tamanhoDoVetor);
+            // Parar a contagem de tempo
+            end_time = clock();
+            // Calcular o tempo decorrido em segundos
+            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+            calculoDeTempo += elapsed_time;
+            CopiarElementosDoVetor(vetorOriginal, &vetor, tamanhoDoVetor);
+            
+
+        }
+        printf("%.6f segundos\n", calculoDeTempo/10);
+        */
+       //****************************  HEAPSORT *************************************************//
+        /*for(int k = 0; k < 10; k++){
+            // Iniciar a contagem de tempo
+            start_time = clock();
+            heapSort(vetor, tamanhoDoVetor);
+            // Parar a contagem de tempo
+            end_time = clock();
+            // Calcular o tempo decorrido em segundos
+            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+            calculoDeTempo += elapsed_time;
+            CopiarElementosDoVetor(vetorOriginal, &vetor, tamanhoDoVetor);
+            
+
+        }
+        printf("%.6f segundos\n", calculoDeTempo/10);
+        */
+       //****************************  QUICKSORT *************************************************//
+        /*for(int k = 0; k < 10; k++){
+            // Iniciar a contagem de tempo
+            start_time = clock();
+            quickSort(vetor, tamanhoDoVetor);
+            // Parar a contagem de tempo
+            end_time = clock();
+            // Calcular o tempo decorrido em segundos
+            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+            calculoDeTempo += elapsed_time;
+            CopiarElementosDoVetor(vetorOriginal, &vetor, tamanhoDoVetor);
+            
+
+        }
+        printf("%.6f segundos\n", calculoDeTempo/10);
+        */
+       //****************************  COUNTINGSORT *************************************************//
+       /*for(int k = 0; k < 10; k++){
+            // Iniciar a contagem de tempo
+            start_time = clock();
+            countingSort(vetor, tamanhoDoVetor);
+            // Parar a contagem de tempo
+            end_time = clock();
+            // Calcular o tempo decorrido em segundos
+            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+            calculoDeTempo += elapsed_time;
+            CopiarElementosDoVetor(vetorOriginal, &vetor, tamanhoDoVetor);
+            
+
+        }
+        printf("%.6f segundos\n", calculoDeTempo/10);
+        */
+
+
+
         free(vetor);
         free(vetorOriginal);
     }
-        
-    //printf("AQUI\n");
     
     return 0;
 }
