@@ -35,21 +35,132 @@ void selectionSort(int arr[], int n){
         swap(&arr[i], &arr[minIndex]);
     }
 }
+void merge(int arr[], int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
 
-void mergeSort(){
+    int L[n1], R[n2];
 
+    for (int i = 0; i < n1; i++)
+        L[i] = arr[left + i];
+    for (int j = 0; j < n2; j++)
+        R[j] = arr[mid + 1 + j];
+
+    int i = 0, j = 0, k = left;
+
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        } else {
+            arr[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+}
+void mergeSort(int arr[], int left, int right){
+        if (left < right) {
+        int mid = left + (right - left) / 2;
+
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+
+        merge(arr, left, mid, right);
+    }
 }
 
-void heapSort(){
+void heapify(int arr[], int n, int i) {
+    int largest = i; 
+    int left = 2 * i + 1; 
+    int right = 2 * i + 2; 
 
+    if (left < n && arr[left] > arr[largest])
+        largest = left;
+
+    if (right < n && arr[right] > arr[largest])
+        largest = right;
+
+    if (largest != i) {
+        swap(&arr[i], &arr[largest]);
+        heapify(arr, n, largest);
+    }
 }
 
-void quickSort(){
+void heapSort(int arr[], int n) {
+    for (int i = n / 2 - 1; i >= 0; i--)
+        heapify(arr, n, i);
 
+    for (int i = n - 1; i > 0; i--) {
+        swap(&arr[0], &arr[i]);
+        heapify(arr, i, 0);
+    }
 }
 
-void countingSort(){
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1);
 
+    for (int j = low; j <= high - 1; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[i + 1], &arr[high]);
+    return (i + 1);
+}
+
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+void countingSort(int arr[], int n) {
+    // Encontra o maior elemento no array
+    int max = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+
+    // Cria um array temporário para contar a ocorrência de cada elemento
+    int *count = (int *)calloc(max + 1, sizeof(int));
+
+    // Conta as ocorrências de cada elemento no array original
+    for (int i = 0; i < n; i++) {
+        count[arr[i]]++;
+    }
+
+    // Atualiza o array original com os elementos ordenados
+    int index = 0;
+    for (int i = 0; i <= max; i++) {
+        while (count[i] > 0) {
+            arr[index] = i;
+            index++;
+            count[i]--;
+        }
+    }
+
+    // Libera a memória alocada para o array de contagem
+    free(count);
 }
 
 //Função para imprimir o vetor
@@ -118,7 +229,7 @@ int main(){
     //******************************************   DEBBUGUER ******************************************//
     
     printf("[[RANDOM]]\n");
-    printf("n\tSelection\tInsertion\tMerge\tHeap\tQuick\tCounting\n");
+    printf("n\tSelection\tInsertion\tMerge\t\tHeap\t\tQuick\t\tCounting\n");
     for(int w = 0; w < rpt; w++ ){
         printf("%d\t", inc);
         // Alimenta o vetor com números Randômicos
@@ -141,7 +252,7 @@ int main(){
 
         }
         printf("%.6f\t", calculoDeTempo/10);
-
+        calculoDeTempo = 0;
         //**************************** SELECTION-SORT *************************************************//
         for(int k = 0; k < 10; k++){
             // Iniciar a contagem de tempo
@@ -156,13 +267,13 @@ int main(){
             
 
         }
-        printf("%.6f\t\n", calculoDeTempo/10);
-        
+        printf("%.6f\t", calculoDeTempo/10);
+        calculoDeTempo = 0;
        //**************************** MERGESORT *************************************************//
-        /*for(int k = 0; k < 10; k++){
+        for(int k = 0; k < 10; k++){
             // Iniciar a contagem de tempo
             start_time = clock();
-            mergeSort(vetor, tamanhoDoVetor);
+            mergeSort(vetor, 0, tamanhoDoVetor-1);
             // Parar a contagem de tempo
             end_time = clock();
             // Calcular o tempo decorrido em segundos
@@ -172,10 +283,10 @@ int main(){
             
 
         }
-        printf("%.6f segundos\n", calculoDeTempo/10);
-        */
+        printf("%.6f\t", calculoDeTempo/10);
+        calculoDeTempo = 0;
        //****************************  HEAPSORT *************************************************//
-        /*for(int k = 0; k < 10; k++){
+        for(int k = 0; k < 10; k++){
             // Iniciar a contagem de tempo
             start_time = clock();
             heapSort(vetor, tamanhoDoVetor);
@@ -188,13 +299,14 @@ int main(){
             
 
         }
-        printf("%.6f segundos\n", calculoDeTempo/10);
-        */
+        printf("%.6f\t", calculoDeTempo/10);
+        calculoDeTempo = 0;
+        
        //****************************  QUICKSORT *************************************************//
-        /*for(int k = 0; k < 10; k++){
+        for(int k = 0; k < 10; k++){
             // Iniciar a contagem de tempo
             start_time = clock();
-            quickSort(vetor, tamanhoDoVetor);
+            quickSort(vetor, 0, tamanhoDoVetor-1);
             // Parar a contagem de tempo
             end_time = clock();
             // Calcular o tempo decorrido em segundos
@@ -204,10 +316,11 @@ int main(){
             
 
         }
-        printf("%.6f segundos\n", calculoDeTempo/10);
-        */
+        printf("%.6f\t", calculoDeTempo/10);
+        calculoDeTempo = 0;
+        
        //****************************  COUNTINGSORT *************************************************//
-       /*for(int k = 0; k < 10; k++){
+       for(int k = 0; k < 10; k++){
             // Iniciar a contagem de tempo
             start_time = clock();
             countingSort(vetor, tamanhoDoVetor);
@@ -220,8 +333,9 @@ int main(){
             
 
         }
-        printf("%.6f segundos\n", calculoDeTempo/10);
-        */
+        printf("%.6f\n", calculoDeTempo/10);
+        calculoDeTempo = 0;
+        
 
 
 
