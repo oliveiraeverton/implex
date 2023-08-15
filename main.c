@@ -54,7 +54,7 @@ void CriaVetoComElementosRandomicos2(int **arr, int *n){
     *arr = (int *)malloc(*n * sizeof(int));
 
     // Variável *vetor guarda a posição inicial do vetor alocado
-    int *vetor = *arr;
+    //int *vetor = *arr;
     // Preencher o vetor com elementos randômicos
     int *pointF = *arr+*n;
     for (int *i = *arr; i < pointF; i++) {
@@ -68,7 +68,9 @@ void CriaVetoComElementosRandomicos2(int **arr, int *n){
 
 
 void CopiarElementosDoVetor(int *vetor,int *vetorC ,int tamanhoDoVetor){
-
+    for(int i = 0; i < tamanhoDoVetor; i++){
+        vetorC[i] = vetor[i];
+    }
 }
 
 int main(){
@@ -81,11 +83,11 @@ int main(){
 
     int *vetor;
     printf("Quantidade de elementos: %d \n", tamanhoDoVetor);
-    CriaVetoComElementosRandomicos(&vetor, &tamanhoDoVetor);
+    CriaVetoComElementosRandomicos2(&vetor, &tamanhoDoVetor);
     printf("Quantidade de elementos: %d \n", tamanhoDoVetor);
 
-    int vetorCopia[tamanhoDoVetor];
-
+    int vetorOriginal[tamanhoDoVetor];
+    CopiarElementosDoVetor(vetor, vetorOriginal, tamanhoDoVetor);
 
     
     // Iniciar a contagem de tempo
@@ -96,7 +98,16 @@ int main(){
     // Calcular o tempo decorrido em segundos
     elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
     printf("Tempo decorrido: %.6f segundos\n", elapsed_time);
+
+    imprimeVetor(vetor, tamanhoDoVetor);
+    imprimeVetor(vetorOriginal, tamanhoDoVetor);
+
     free(vetor);
+
+    // TO-DO Em um laço
+    // TO-DO : COPIAR VETOR
+    // TO-DO : CHAMAR A FUNÇÃO
+    // TO-DO : RESETAR O VETOR
 
     return 0;
 }
