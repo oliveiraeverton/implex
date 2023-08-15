@@ -16,7 +16,7 @@ void insertionSort(int arr[], int n) {
     }
 }
 
-
+//Função para imprimir o vetor
 void imprimeVetor(int arr[], int n){
 
 
@@ -27,6 +27,7 @@ void imprimeVetor(int arr[], int n){
 
 }
 
+//Essa função não está sendo utilizada
 void CriaVetoComElementosRandomicos(int **arr, int *n){
     // Inicializar o gerador de números randômicos com um valor de semente
     srand(time(NULL));
@@ -46,6 +47,7 @@ void CriaVetoComElementosRandomicos(int **arr, int *n){
     *arr = vetor;
 }
 
+//Função para criar os números aleatórios
 void CriaVetoComElementosRandomicos2(int **arr, int *n){
     // Inicializar o gerador de números randômicos com um valor de semente
     srand(time(NULL));
@@ -82,9 +84,9 @@ int main(){
     
 
     int *vetor;
-    //printf("Quantidade de elementos: %d \n", tamanhoDoVetor);
+
     CriaVetoComElementosRandomicos2(&vetor, &tamanhoDoVetor);
-    //printf("Quantidade de elementos: %d \n", tamanhoDoVetor);
+
 
     int vetorOriginal[tamanhoDoVetor];
     CopiarElementosDoVetor(vetor, vetorOriginal, tamanhoDoVetor);
@@ -99,24 +101,13 @@ int main(){
         // Calcular o tempo decorrido em segundos
         elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
         calculoDeTempo += elapsed_time;
-        //imprimeVetor(vetor, tamanhoDoVetor);
-        //imprimeVetor(vetorOriginal, tamanhoDoVetor);
+
         CopiarElementosDoVetor(vetorOriginal, vetor, tamanhoDoVetor);
-        //imprimeVetor(vetor, tamanhoDoVetor);
-        //imprimeVetor(vetorOriginal, tamanhoDoVetor);
+
     }
     printf("AQUI\n");
     printf("Tempo decorrido: %.6f segundos\n", calculoDeTempo/10);
 
-    //imprimeVetor(vetor, tamanhoDoVetor);
-    //imprimeVetor(vetorOriginal, tamanhoDoVetor);
-
     free(vetor);
-
-    // TO-DO Em um laço
-    // TO-DO : COPIAR VETOR
-    // TO-DO : CHAMAR A FUNÇÃO
-    // TO-DO : RESETAR O VETOR
-
     return 0;
 }
