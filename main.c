@@ -49,7 +49,7 @@ void CriaVetoComElementosRandomicos(int **arr, int *n){
 void CriaVetoComElementosRandomicos2(int **arr, int *n){
     // Inicializar o gerador de números randômicos com um valor de semente
     srand(time(NULL));
-    *n = 5;
+    *n = 500;
     // Alocar memória para o vetor
     *arr = (int *)malloc(*n * sizeof(int));
 
@@ -77,30 +77,39 @@ int main(){
 
     clock_t start_time, end_time;
     double elapsed_time;
-
+    double calculoDeTempo = 0;
     int tamanhoDoVetor=0;
     
 
     int *vetor;
-    printf("Quantidade de elementos: %d \n", tamanhoDoVetor);
+    //printf("Quantidade de elementos: %d \n", tamanhoDoVetor);
     CriaVetoComElementosRandomicos2(&vetor, &tamanhoDoVetor);
-    printf("Quantidade de elementos: %d \n", tamanhoDoVetor);
+    //printf("Quantidade de elementos: %d \n", tamanhoDoVetor);
 
     int vetorOriginal[tamanhoDoVetor];
     CopiarElementosDoVetor(vetor, vetorOriginal, tamanhoDoVetor);
 
-    
-    // Iniciar a contagem de tempo
-    start_time = clock();
-    insertionSort(vetor, tamanhoDoVetor);
-    // Parar a contagem de tempo
-    end_time = clock();
-    // Calcular o tempo decorrido em segundos
-    elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-    printf("Tempo decorrido: %.6f segundos\n", elapsed_time);
+    for(int k = 0; k < 10; k++){
+        // Iniciar a contagem de tempo
+        start_time = clock();
+        insertionSort(vetor, tamanhoDoVetor);
+        // Parar a contagem de tempo
+        end_time = clock();
+        printf("Tempo decorrido: %.6f segundos\n", elapsed_time);
+        // Calcular o tempo decorrido em segundos
+        elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+        calculoDeTempo += elapsed_time;
+        //imprimeVetor(vetor, tamanhoDoVetor);
+        //imprimeVetor(vetorOriginal, tamanhoDoVetor);
+        CopiarElementosDoVetor(vetorOriginal, vetor, tamanhoDoVetor);
+        //imprimeVetor(vetor, tamanhoDoVetor);
+        //imprimeVetor(vetorOriginal, tamanhoDoVetor);
+    }
+    printf("AQUI\n");
+    printf("Tempo decorrido: %.6f segundos\n", calculoDeTempo/10);
 
-    imprimeVetor(vetor, tamanhoDoVetor);
-    imprimeVetor(vetorOriginal, tamanhoDoVetor);
+    //imprimeVetor(vetor, tamanhoDoVetor);
+    //imprimeVetor(vetorOriginal, tamanhoDoVetor);
 
     free(vetor);
 
