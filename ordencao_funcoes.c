@@ -176,9 +176,15 @@ void countingSort(int arr[], int n) {
 //Função para imprimir o vetor
 void imprimeVetor(int arr[], int n){
 
-
-    for(int i = 0; i < n; i++)
+    int count=0;
+    for(int i = 0; i < n; i++){
+        if(count == 10){
+            count =0;
+             printf("\n");
+        }
         printf("%d ", arr[i]);
+        count++;
+    }
     
     printf("\n\n");
 
@@ -243,4 +249,20 @@ int * inverte(int *vetor, int n){
     }
     
     return vet;
+}
+
+void semiEmbaralha(int arrOrig[], int arr[], int n){
+
+    int porcentagem_embaralha = n*0.10;
+
+    srand(time(NULL));
+
+    for( int i =0; i < porcentagem_embaralha; i++){
+
+        
+        int w = rand() % 1000;
+        arrOrig[i] = w;
+        arr[i] = w;
+    }
+
 }
