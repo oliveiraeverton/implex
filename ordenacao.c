@@ -6,472 +6,483 @@
 
 int main(){
 
-    //**************ABERTURA DE ARQUIVO*****************//
+    //-**************ABERTURA DE ARQUIVO*****************-//
     FILE *arq= fopen("saidas.txt", "w");
     if(arq == NULL){
         printf("Erro na criacao do documento TXT");
         return 1;
     }
-    //*************************************//
+    //-*************************************-//
 
 
-    //**************   DECLARAÇÃO DE VARIÁVEIS **************//
+    //-**************   DECLARAÇÃO DE VARIÁVEIS **************-//
     clock_t start_time, end_time;   // Variável para iniciar e terminar o cronômetro
     double elapsed_time=0;            // Variável que guardará a diferença entre inicío e fim do cronômetro
     double calculoDeTempo = 0;      // variável para calcular a média do tempo
     int *vetor;                     //Vetor utilizado para a ordenação dentro das funções de ordenação
     int *vetorOriginal;             // Vetor que terá as posições originais de cada elemento
-    int inc = 1000;    // Tamanho Inicial
-    int fim = 20000;    // Tamanho Final
-    int stp = 1000;    // Intervalo entre os Tamanhos
-    int rpt = fim/stp;    // Número de repetições a serem realizadas
+    int inc = 1000;      // Tamanho Inicial
+    int fim = 20000;     // Tamanho Final
+    int stp = 1000;      // Intervalo entre os Tamanhos
+    int rpt = 10;        // Número de repetições a serem realizadas
     double tempos[6] = {0};
-    //*************************************//
+    //-*************************************-//
 
       
    
-    //**************   DEBBUGUER **************//
+    //-******************************************   DEBBUGUER ******************************************-//
     //imprimeVetor(vetor, inc);
     //imprimeVetor(vetorOriginal, inc);
     //CopiarElementosDoVetor(vetor, &vetorOriginal, inc);
-    //**************   DEBBUGUER **************//
+    //-******************************************   DEBBUGUER ******************************************-//
 
 
-    //*******************************************//
-    //*****************RANDOM************************//
-    //*******************************************// 
+    //-*******************************************************************************************************************************-//
+    //-***********************************************************RANDOM**************************************************************-//
+    //-*******************************************************************************************************************************-//
     printf("[[RANDOM]]\n");
-    fprintf(arq, "[[RANDOM]]\n");
     printf("n\tSelection\tInsertion\tMerge\t\tHeap\t\tQuick\t\tCounting\n");
+    
+    fprintf(arq, "[[RANDOM]]\n");
     fprintf(arq, "n\tSelection\tInsertion\tMerge\t\tHeap\t\tQuick\t\tCounting\n");
-    for(int w = 0; w < rpt; w++ ){
-        printf("%d\t", inc);
-        fprintf(arq, "%d\t", inc);
+
+    for(int w = inc; w <= fim; w += stp){
+        printf("%d\t", w);
+        fprintf(arq, "%d\t", w);
+       
+
+       for(int n = 0; n < rpt; n++){
         // Alimenta o vetor com números Randômicos
-       
-        //inc = inc;
-       
-
-       for(int n =0; n < 10; n++){
-
-         CriaVetorComElementosRandomicos(&vetor, &vetorOriginal, &inc);
-
-         calculoDeTempo = 0;
-        //********** SELECTION-SORT *****************-//
-
-            // Iniciar a contagem de tempo
-            start_time = clock();
-            selectionSort(vetor, inc);
-            // Parar a contagem de tempo
-            end_time = clock();
-            // Calcular o tempo decorrido em segundos
-            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-            calculoDeTempo += elapsed_time;
-            CopiarElementosDoVetor(vetorOriginal, &vetor, inc);
-            tempos[0] = tempos[0] + calculoDeTempo;
-
-          
-            
-
-            calculoDeTempo = 0;
-        //********** INSERTION-SORT *****************-//
-            // Iniciar a contagem de tempo
-            start_time = clock();
-            insertionSort(vetor, inc);
-            // Parar a contagem de tempo
-            end_time = clock();
-            // Calcular o tempo decorrido em segundos
-            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-            calculoDeTempo += elapsed_time;
-            CopiarElementosDoVetor(vetorOriginal, &vetor, inc);
-             tempos[1] = tempos[1] + calculoDeTempo;
-
-
-             calculoDeTempo = 0;
-       //********** MERGESORT *****************-//
-
-            // Iniciar a contagem de tempo
-            start_time = clock();
-            mergeSort(vetor, 0, inc-1);
-            // Parar a contagem de tempo
-            end_time = clock();
-            // Calcular o tempo decorrido em segundos
-            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-            calculoDeTempo += elapsed_time;
-            CopiarElementosDoVetor(vetorOriginal, &vetor, inc);
-             tempos[2] = tempos[2] + calculoDeTempo;
+        CriaVetorComElementosRandomicos(&vetor, &vetorOriginal, &w);
 
 
         calculoDeTempo = 0;
-       //**********  HEAPSORT *****************-//
-
+        //-********** SELECTION-SORT *****************-//
         // Iniciar a contagem de tempo
-            start_time = clock();
-            heapSort(vetor, inc);
-            // Parar a contagem de tempo
-            end_time = clock();
-            // Calcular o tempo decorrido em segundos
-            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-            calculoDeTempo += elapsed_time;
-            CopiarElementosDoVetor(vetorOriginal, &vetor, inc);
-            tempos[3] = tempos[3] + calculoDeTempo;
+        start_time = clock();
+        selectionSort(vetor, w);
+        // Parar a contagem de tempo
+        end_time = clock();
+        // Calcular o tempo decorrido em segundos
+        elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+        calculoDeTempo += elapsed_time;
+        CopiarElementosDoVetor(vetorOriginal, &vetor, w);
+        tempos[0] = tempos[0] + calculoDeTempo;
 
 
         calculoDeTempo = 0;
-       //**********  QUICKSORT *****************-//
-            // Iniciar a contagem de tempo
-            start_time = clock();
-            quickSort(vetor, 0, inc-1);
-            // Parar a contagem de tempo
-            end_time = clock();
-            // Calcular o tempo decorrido em segundos
-            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-            calculoDeTempo += elapsed_time;
-            CopiarElementosDoVetor(vetorOriginal, &vetor, inc);
-            tempos[4] = tempos[4] + calculoDeTempo;
-
-        calculoDeTempo = 0;
-       //**********  COUNTINGSORT *****************-//
+        //-********** INSERTION-SORT *****************-//
         // Iniciar a contagem de tempo
-            /*start_time = clock();
-            countingSort(vetor, inc);
-            // Parar a contagem de tempo
-            end_time = clock();
-            // Calcular o tempo decorrido em segundos
-            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-            calculoDeTempo += elapsed_time;
-            printf("%f\n", (double)(end_time - start_time));
-            CopiarElementosDoVetor(vetorOriginal, &vetor, inc);
-            tempos[5] = tempos[5] + calculoDeTempo;*/
+        start_time = clock();
+        insertionSort(vetor, w);
+        // Parar a contagem de tempo
+        end_time = clock();
+        // Calcular o tempo decorrido em segundos
+        elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+        calculoDeTempo += elapsed_time;
+        CopiarElementosDoVetor(vetorOriginal, &vetor, w);
+         tempos[1] = tempos[1] + calculoDeTempo;
 
-            LARGE_INTEGER start_time, end_time, frequency;
-            double timee;
 
-            QueryPerformanceFrequency(&frequency); // Obter a frequência do contador
+        calculoDeTempo = 0;
+       //-********** MERGESORT *****************-//
+        // Iniciar a contagem de tempo
+        start_time = clock();
+        mergeSort(vetor, 0, w-1);
+        // Parar a contagem de tempo
+        end_time = clock();
+        // Calcular o tempo decorrido em segundos
+        elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+        calculoDeTempo += elapsed_time;
+        CopiarElementosDoVetor(vetorOriginal, &vetor, w);
+        tempos[2] = tempos[2] + calculoDeTempo;
 
-            QueryPerformanceCounter(&start_time); // Iniciar a contagem de tempo
 
-            countingSort(vetor, inc);
+        calculoDeTempo = 0;
+        //-**********  HEAPSORT *****************-//
+        // Iniciar a contagem de tempo
+        start_time = clock();
+        heapSort(vetor, w);
+        // Parar a contagem de tempo
+        end_time = clock();
+        // Calcular o tempo decorrido em segundos
+        elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+        calculoDeTempo += elapsed_time;
+        CopiarElementosDoVetor(vetorOriginal, &vetor, w);
+        tempos[3] = tempos[3] + calculoDeTempo;
 
-            QueryPerformanceCounter(&end_time); // Parar a contagem de tempo
 
-            timee = (double)(end_time.QuadPart - start_time.QuadPart) / frequency.QuadPart;
-            tempos[5] = tempos[5] + timee;
-            //printf("Tempo decorrido: %f segundos\n", timee);
-            CopiarElementosDoVetor(vetorOriginal, &vetor, inc);
+        calculoDeTempo = 0;
+       //-**********  QUICKSORT *****************-//
+        // Iniciar a contagem de tempo
+        start_time = clock();
+        quickSort(vetor, 0, w-1);
+        // Parar a contagem de tempo
+        end_time = clock();
+        // Calcular o tempo decorrido em segundos
+        elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+        calculoDeTempo += elapsed_time;
+        CopiarElementosDoVetor(vetorOriginal, &vetor, w);
+        tempos[4] = tempos[4] + calculoDeTempo;
+
+        calculoDeTempo = 0;
+        //-**********  COUNTINGSORT *****************-//
+        // Iniciar a contagem de tempo
+        start_time = clock();
+        countingSort(vetor, w);
+        // Parar a contagem de tempo
+        end_time = clock();
+        // Calcular o tempo decorrido em segundos
+        elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+        calculoDeTempo += elapsed_time;
+        //printf("%f\n", (double)(end_time - start_time));
+        CopiarElementosDoVetor(vetorOriginal, &vetor, w);
+        tempos[5] = tempos[5] + calculoDeTempo;
+
+        LARGE_INTEGER start_time, end_time, frequency;
+        double timee;
+        QueryPerformanceFrequency(&frequency); // Obter a frequência do contador
+        QueryPerformanceCounter(&start_time); // Iniciar a contagem de tempo
+        countingSort(vetor, w);
+        QueryPerformanceCounter(&end_time); // Parar a contagem de tempo
+        timee = (double)(end_time.QuadPart - start_time.QuadPart) / frequency.QuadPart;
+        tempos[5] = tempos[5] + timee;
+        //printf("Tempo decorrido: %f segundos\n", timee);
+        CopiarElementosDoVetor(vetorOriginal, &vetor, w);
              
             
 
        }
-
+       
+       // Imprime os tempos
        for(int i =0; i < 6; i++){
-
-        printf("%.6f\t", tempos[i]/10.0);
-        fprintf(arq, "%.6f\t", tempos[i]/10.0);
+        
+        printf("%.6f\t", tempos[i]/rpt);
+        fprintf(arq, "%.6f\t", tempos[i]/rpt);
         tempos[i] = 0;
 
        }
 
-       printf("\n");
+        printf("\n");
         
         
         free(vetor);
         free(vetorOriginal);
-        inc += stp; // Incrementa a quantidade de elementos que será para a próxima iteração
-}
+        
+    }
 
     printf("\n\n\n"); 
 
 
-    //*******************************************//
-    //*****************REVERSE***********************//
-    //*******************************************//
-    /*printf("[[REVERSE]]\n");
-    fprintf(arq, "[[REVERSE]]\n");
-
+    //-**************************************************************************************************************************//
+    //-**********************************************************REVERSE*********************************************************//
+    //-**************************************************************************************************************************//
+    printf("[[REVERSE]]\n");
     printf("n\tSelection\tInsertion\tMerge\t\tHeap\t\tQuick\t\tCounting\n");
+    
+    fprintf(arq, "[[REVERSE]]\n");
     fprintf(arq, "n\tSelection\tInsertion\tMerge\t\tHeap\t\tQuick\t\tCounting\n");
-    int *vetorInverso=NULL;
-    inc = 1000;
-
-    for(int w = 0; w < rpt; w++ ){
-        printf("%d\t", inc);
-        fprintf(arq, "%d\t", inc);
-        // Alimenta o vetor com números Randômicos
-        CriaVetorComElementosRandomicos(&vetor, &vetorOriginal, &inc);
-        //inc = inc;
+    
+    //int *vetorInverso=NULL;
+    for(int w = inc; w <= fim; w += stp){
+        printf("%d\t", w); // Imprime a quantidade de elementos
+        fprintf(arq, "%d\t", w); // Imprime a quantidade de elementos
 
 
-        quickSort(vetor, 0, inc-1);
+        for(int n = 0; n < rpt; n++){
+            // Alimenta o vetor com números Randômicos
+            CriaVetorComElementosRandomicos(&vetor, &vetorOriginal, &w);
+            
+            // Ordena o vetor pois iremos usar o REVERSE
+            quickSort(vetor, 0, w-1);
+            quickSort(vetorOriginal, 0, w-1);
 
-        //imprimeVetor(vetor, inc);
+            revert(vetor, w); 
+            revert(vetorOriginal, w); 
+            //imprimeVetor(vetor, inc);
 
-        vetorInverso = inverte(vetor, inc);
-        //imprimeVetor(vetor, inc);
+            //vetorInverso = inverte(vetor, w);
+            //imprimeVetor(vetor, inc);
+
+            //free(vetor);
+
+        
+            
+            
+            calculoDeTempo = 0;
+            //-********** SELECTION-SORT *****************-//
+            // Iniciar a contagem de tempo
+            start_time = clock();
+            selectionSort(vetor, w);
+            // Parar a contagem de tempo
+            end_time = clock();
+            // Calcular o tempo decorrido em segundos
+            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+            calculoDeTempo += elapsed_time;
+            tempos[0] = tempos[0] + calculoDeTempo;
+            CopiarElementosDoVetor(vetorOriginal, &vetor, w);
+                
+
+            
+            //printf("%.6f\t", calculoDeTempo/rpt);
+            //fprintf(arq, "%.6f\t", calculoDeTempo/rpt);
+
+            calculoDeTempo = 0;
+            //-********** INSERTION-SORT *****************-//
+            // Iniciar a contagem de tempo
+            start_time = clock();
+            insertionSort(vetor, w);
+            // Parar a contagem de tempo
+            end_time = clock();
+            // Calcular o tempo decorrido em segundos
+            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+            calculoDeTempo += elapsed_time;
+            tempos[1] = tempos[1] + calculoDeTempo;
+            CopiarElementosDoVetor(vetorOriginal, &vetor, w);
+                
+
+            
+            //printf("%.6f\t", calculoDeTempo/rpt);
+            //fprintf(arq, "%.6f\t", calculoDeTempo/rpt);
+
+            calculoDeTempo = 0;
+            //-********** MERGESORT *****************-//
+            // Iniciar a contagem de tempo
+            start_time = clock();
+            mergeSort(vetor, 0, w-1);
+            // Parar a contagem de tempo
+            end_time = clock();
+            // Calcular o tempo decorrido em segundos
+            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+            calculoDeTempo += elapsed_time;
+            tempos[2] = tempos[2] + calculoDeTempo;
+            CopiarElementosDoVetor(vetorOriginal, &vetor, w);
+                
+
+            
+            //printf("%.6f\t", calculoDeTempo/rpt);
+            //fprintf(arq, "%.6f\t", calculoDeTempo/rpt);
+
+            calculoDeTempo = 0;
+            //-**********  HEAPSORT *****************-//
+            // Iniciar a contagem de tempo
+            start_time = clock();
+            heapSort(vetor, w);
+            // Parar a contagem de tempo
+            end_time = clock();
+            // Calcular o tempo decorrido em segundos
+            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+            calculoDeTempo += elapsed_time;
+            tempos[3] = tempos[3] + calculoDeTempo;
+            CopiarElementosDoVetor(vetorOriginal, &vetor, w);
+                
+
+            
+            //printf("%.6f\t", calculoDeTempo/rpt);
+            //fprintf(arq, "%.6f\t", calculoDeTempo/rpt);
+
+            calculoDeTempo = 0;
+            //-**********  QUICKSORT *****************-//
+            // Iniciar a contagem de tempo
+            start_time = clock();
+            quickSort(vetor, 0, w-1);
+            // Parar a contagem de tempo
+            end_time = clock();
+            // Calcular o tempo decorrido em segundos
+            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+            calculoDeTempo += elapsed_time;
+            tempos[4] = tempos[4] + calculoDeTempo;
+            CopiarElementosDoVetor(vetorOriginal, &vetor, w);
+                
+
+            
+            //printf("%.6f\t", calculoDeTempo/rpt);
+            //fprintf(arq, "%.6f\t", calculoDeTempo/rpt);
+
+            calculoDeTempo = 0;
+            //-**********  COUNTINGSORT *****************-//
+            // Iniciar a contagem de tempo
+            start_time = clock();
+            countingSort(vetor, w);
+            // Parar a contagem de tempo
+            end_time = clock();
+            // Calcular o tempo decorrido em segundos
+            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+            calculoDeTempo += elapsed_time;
+            tempos[5] = tempos[5] + calculoDeTempo;
+            CopiarElementosDoVetor(vetorOriginal, &vetor, w);
+                
+
+            
+            //printf("%.6f\n", calculoDeTempo/rpt);
+            //fprintf(arq, "%.6f\t", calculoDeTempo/rpt);
+
+            calculoDeTempo = 0;
+        }
+        
+
+        // Imprime os tempos
+        for(int i =0; i < 6; i++){
+        
+            printf("%.6f\t", tempos[i]/rpt);
+            fprintf(arq, "%.6f\t", tempos[i]/rpt);
+            tempos[i] = 0;
+
+        }
+        printf("\n");
         free(vetor);
-
-          //Vetor reverso//
-       
-        
-       
-        calculoDeTempo = 0;
-        //********** SELECTION-SORT *****************-//
-        for(int k = 0; k < 10; k++){
-            // Iniciar a contagem de tempo
-            start_time = clock();
-            selectionSort(vetorInverso, inc);
-            // Parar a contagem de tempo
-            end_time = clock();
-            // Calcular o tempo decorrido em segundos
-            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-            calculoDeTempo += elapsed_time;
-            CopiarElementosDoVetor(vetorOriginal, &vetorInverso, inc);
-            
-
-        }
-        printf("%.6f\t", calculoDeTempo/10);
-        fprintf(arq, "%.6f\t", calculoDeTempo/10);
-
-        calculoDeTempo = 0;
-        //********** INSERTION-SORT *****************-//
-        for(int k = 0; k < 10; k++){
-            // Iniciar a contagem de tempo
-            start_time = clock();
-            insertionSort(vetorInverso, inc);
-            // Parar a contagem de tempo
-            end_time = clock();
-            // Calcular o tempo decorrido em segundos
-            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-            calculoDeTempo += elapsed_time;
-            CopiarElementosDoVetor(vetorOriginal, &vetorInverso, inc);
-            
-
-        }
-        printf("%.6f\t", calculoDeTempo/10);
-        fprintf(arq, "%.6f\t", calculoDeTempo/10);
-
-        calculoDeTempo = 0;
-       //********** MERGESORT *****************-//
-        for(int k = 0; k < 10; k++){
-            // Iniciar a contagem de tempo
-            start_time = clock();
-            mergeSort(vetorInverso, 0, inc-1);
-            // Parar a contagem de tempo
-            end_time = clock();
-            // Calcular o tempo decorrido em segundos
-            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-            calculoDeTempo += elapsed_time;
-            CopiarElementosDoVetor(vetorOriginal, &vetorInverso, inc);
-            
-
-        }
-        printf("%.6f\t", calculoDeTempo/10);
-        fprintf(arq, "%.6f\t", calculoDeTempo/10);
-
-        calculoDeTempo = 0;
-       //**********  HEAPSORT *****************-//
-        for(int k = 0; k < 10; k++){
-            // Iniciar a contagem de tempo
-            start_time = clock();
-            heapSort(vetorInverso, inc);
-            // Parar a contagem de tempo
-            end_time = clock();
-            // Calcular o tempo decorrido em segundos
-            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-            calculoDeTempo += elapsed_time;
-            CopiarElementosDoVetor(vetorOriginal, &vetorInverso, inc);
-            
-
-        }
-        printf("%.6f\t", calculoDeTempo/10);
-        fprintf(arq, "%.6f\t", calculoDeTempo/10);
-
-        calculoDeTempo = 0;
-       //**********  QUICKSORT *****************-//
-        for(int k = 0; k < 10; k++){
-            // Iniciar a contagem de tempo
-            start_time = clock();
-            quickSort(vetorInverso, 0, inc-1);
-            // Parar a contagem de tempo
-            end_time = clock();
-            // Calcular o tempo decorrido em segundos
-            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-            calculoDeTempo += elapsed_time;
-            CopiarElementosDoVetor(vetorOriginal, &vetorInverso, inc);
-            
-
-        }
-        printf("%.6f\t", calculoDeTempo/10);
-        fprintf(arq, "%.6f\t", calculoDeTempo/10);
-
-        calculoDeTempo = 0;
-       //**********  COUNTINGSORT *****************-//
-       for(int k = 0; k < 10; k++){
-            // Iniciar a contagem de tempo
-            start_time = clock();
-            countingSort(vetorInverso, inc);
-            // Parar a contagem de tempo
-            end_time = clock();
-            // Calcular o tempo decorrido em segundos
-            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-            calculoDeTempo += elapsed_time;
-            CopiarElementosDoVetor(vetorOriginal, &vetorInverso, inc);
-            
-
-        }
-        printf("%.6f\n", calculoDeTempo/10);
-        fprintf(arq, "%.6f\t", calculoDeTempo/10);
-
-        calculoDeTempo = 0;
-        
-        
-        free(vetorInverso);
         free(vetorOriginal);
-        inc += stp; // Incrementa a quantidade de elementos que será para a próxima iteração
+        
         
             
 
     }
 
-    printf("\n\n\n"); */
+    printf("\n\n\n"); 
 
 
 
     
-    //*******************************************//
-    //*****************SORTED************************//
-    //*******************************************//
+    //-***************************************************************************************************************************-//
+    //-*******************************************************SORTED**************************************************************-//
+    //-***************************************************************************************************************************-//
 
-    /*printf("[[SORTED]]\n");
-    fprintf(arq, "[[SORTED]]\n");
+    printf("[[SORTED]]\n");
     printf("n\tSelection\tInsertion\tMerge\t\tHeap\t\tQuick\t\tCounting\n");
-    fprintf(arq, "n\tSelection\tInsertion\tMerge\t\tHeap\t\tQuick\t\tCounting\n");
-    int teste = 10;
-    inc = 1000;// Reseta o início da quantidade de elementos
-    for(int w = 0; w < rpt; w++ ){
-        printf("%d\t", inc); // Imprime a quantidade de elementos que estamos passando para o vetor
-        fprintf(arq, "%d\t", inc); // Imprime a quantidade de elementos que estamos passando para o vetor
 
-        // Alimenta o vetor com números Randômicos
-        CriaVetorComElementosRandomicos(&vetor, &vetorOriginal, &inc);
-        selectionSort(vetor, inc); // Deixa o vetor ordenado
+    fprintf(arq, "[[SORTED]]\n");
+    fprintf(arq, "n\tSelection\tInsertion\tMerge\t\tHeap\t\tQuick\t\tCounting\n");
+
+    for(int w = inc; w <= fim; w += stp){
+        printf("%d\t", w); // Imprime a quantidade de elementos que estamos passando para o vetor
+        fprintf(arq, "%d\t", w); // Imprime a quantidade de elementos que estamos passando para o vetor
+
+
+
+        for(int n = 0; n < rpt; n++){
+            // Alimenta o vetor com números Randômicos
+            CriaVetorComElementosRandomicos(&vetor, &vetorOriginal, &w);
+            selectionSort(vetor, w); // Deixa o vetor ordenado
+            selectionSort(vetorOriginal, w); // Deixa o vetor ordenado
+            
+
+            calculoDeTempo = 0;
+            //-********** SELECTION-SORT *****************-//
+            // Iniciar a contagem de tempo
+            start_time = clock();
+            selectionSort(vetor, w);
+            // Parar a contagem de tempo
+            end_time = clock();
+            // Calcular o tempo decorrido em segundos
+            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+            calculoDeTempo += elapsed_time;
+            tempos[0] = tempos[0] + calculoDeTempo;
+            CopiarElementosDoVetor(vetorOriginal, &vetor, inc);
+            
+
+            
+            
+
+            calculoDeTempo = 0;
+            //-********** INSERTION-SORT *****************-//
+            // Iniciar a contagem de tempo
+            start_time = clock();
+            insertionSort(vetor, w);
+            // Parar a contagem de tempo
+            end_time = clock();
+            // Calcular o tempo decorrido em segundos
+            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+            calculoDeTempo += elapsed_time;
+            tempos[1] = tempos[1] + calculoDeTempo;
+            CopiarElementosDoVetor(vetorOriginal, &vetor, inc); //RETIRAR DEPOIS
+            
+            
+            
+
+            calculoDeTempo = 0;
+            //-********** MERGESORT *****************-//
+            // Iniciar a contagem de tempo
+            start_time = clock();
+            mergeSort(vetor, 0, w-1);
+            // Parar a contagem de tempo
+            end_time = clock();
+            // Calcular o tempo decorrido em segundos
+            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+            calculoDeTempo += elapsed_time;
+            tempos[2] = tempos[2] + calculoDeTempo;
+            CopiarElementosDoVetor(vetorOriginal, &vetor, inc);
+                
+
+            
+            
+
+            calculoDeTempo = 0;
+            //-**********  HEAPSORT *****************-//
+            // Iniciar a contagem de tempo
+            start_time = clock();
+            heapSort(vetor, w);
+            // Parar a contagem de tempo
+            end_time = clock();
+            // Calcular o tempo decorrido em segundos
+            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+            calculoDeTempo += elapsed_time;
+            tempos[3] = tempos[3] + calculoDeTempo;
+            CopiarElementosDoVetor(vetorOriginal, &vetor, inc);
+                
+
+    
+
+            calculoDeTempo = 0;
+            //-**********  QUICKSORT *****************-//
+            // Iniciar a contagem de tempo
+            start_time = clock();
+            quickSort(vetor, 0, w-1);
+            // Parar a contagem de tempo
+            end_time = clock();
+            // Calcular o tempo decorrido em segundos
+            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+            calculoDeTempo += elapsed_time;
+            tempos[4] = tempos[4] + calculoDeTempo;
+            CopiarElementosDoVetor(vetorOriginal, &vetor, inc);
+                
+
+            
+
+            calculoDeTempo = 0;
+            //-**********  COUNTINGSORT *****************-//
+            // Iniciar a contagem de tempo
+            start_time = clock();
+            countingSort(vetor, w);
+            // Parar a contagem de tempo
+            end_time = clock();
+            // Calcular o tempo decorrido em segundos
+            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+            calculoDeTempo += elapsed_time;
+            tempos[5] = tempos[5] + calculoDeTempo;
+            //CopiarElementosDoVetor(vetorOriginal, &vetor, inc);
+                
+
+            
         
 
-        calculoDeTempo = 0;
-        //********** SELECTION-SORT *****************-//
-        for(int k = 0; k < teste; k++){
-            // Iniciar a contagem de tempo
-            start_time = clock();
-            selectionSort(vetor, inc);
-            // Parar a contagem de tempo
-            end_time = clock();
-            // Calcular o tempo decorrido em segundos
-            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-            calculoDeTempo += elapsed_time;
-            //CopiarElementosDoVetor(vetorOriginal, &vetor, inc);
-            //imprimeVetor(vetor, inc);
+            calculoDeTempo = 0;
 
         }
-        printf("%.6f\t", calculoDeTempo/10);
-        fprintf(arq, "%.6f\t", calculoDeTempo/10);
-
-        calculoDeTempo = 0;
-        //********** INSERTION-SORT *****************-//
-        for(int k = 0; k < teste; k++){
-            // Iniciar a contagem de tempo
-            start_time = clock();
-            insertionSort(vetor, inc);
-            // Parar a contagem de tempo
-            end_time = clock();
-            // Calcular o tempo decorrido em segundos
-            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-            calculoDeTempo += elapsed_time;
-            //CopiarElementosDoVetor(vetorOriginal, &vetor, inc); //RETIRAR DEPOIS
-            
+        // Imprime os tempos
+        for(int i =0; i < 6; i++){
+        
+            printf("%.6f\t", tempos[i]/rpt);
+            fprintf(arq, "%.6f\t", tempos[i]/rpt);
+            tempos[i] = 0;
 
         }
-        printf("%.6f\t", calculoDeTempo/10);
-        fprintf(arq, "%.6f\t", calculoDeTempo/10);
-
-        calculoDeTempo = 0;
-       //********** MERGESORT *****************-//
-        for(int k = 0; k < teste; k++){
-            // Iniciar a contagem de tempo
-            start_time = clock();
-            mergeSort(vetor, 0, inc-1);
-            // Parar a contagem de tempo
-            end_time = clock();
-            // Calcular o tempo decorrido em segundos
-            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-            calculoDeTempo += elapsed_time;
-            //CopiarElementosDoVetor(vetorOriginal, &vetor, inc);
-            
-
-        }
-        printf("%.6f\t", calculoDeTempo/10);
-        fprintf(arq, "%.6f\t", calculoDeTempo/10);
-
-        calculoDeTempo = 0;
-       //**********  HEAPSORT *****************-//
-        for(int k = 0; k < teste; k++){
-            // Iniciar a contagem de tempo
-            start_time = clock();
-            heapSort(vetor, inc);
-            // Parar a contagem de tempo
-            end_time = clock();
-            // Calcular o tempo decorrido em segundos
-            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-            calculoDeTempo += elapsed_time;
-            //CopiarElementosDoVetor(vetorOriginal, &vetor, inc);
-            
-
-        }
-        printf("%.6f\t", calculoDeTempo/10);
-        fprintf(arq, "%.6f\t", calculoDeTempo/10);
-
-        calculoDeTempo = 0;
-       //**********  QUICKSORT *****************-//
-        for(int k = 0; k < teste; k++){
-            // Iniciar a contagem de tempo
-            start_time = clock();
-            quickSort(vetor, 0, inc-1);
-            // Parar a contagem de tempo
-            end_time = clock();
-            // Calcular o tempo decorrido em segundos
-            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-            calculoDeTempo += elapsed_time;
-            //CopiarElementosDoVetor(vetorOriginal, &vetor, inc);
-            
-
-        }
-        printf("%.6f\t", calculoDeTempo/10);
-        fprintf(arq, "%.6f\t", calculoDeTempo/10);
-
-        calculoDeTempo = 0;
-       //**********  COUNTINGSORT *****************-//
-       for(int k = 0; k < teste; k++){
-            // Iniciar a contagem de tempo
-            start_time = clock();
-            countingSort(vetor, inc);
-            // Parar a contagem de tempo
-            end_time = clock();
-            // Calcular o tempo decorrido em segundos
-            elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-            calculoDeTempo += elapsed_time;
-            //CopiarElementosDoVetor(vetorOriginal, &vetor, inc);
-            
-
-        }
-        printf("%.6f\n", calculoDeTempo/10);
-        fprintf(arq, "%.6f\t", calculoDeTempo/10);
-
-        calculoDeTempo = 0;
+        printf("\n");
         
         
         free(vetor);
         free(vetorOriginal);
-        inc += stp; // Incrementa a quantidade de elementos que será para a próxima iteração
-    }  */
+        
+    }  
 
        
 

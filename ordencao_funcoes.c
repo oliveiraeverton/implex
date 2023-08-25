@@ -183,6 +183,20 @@ void imprimeVetor(int arr[], int n){
     printf("\n\n");
 
 }
+void revert(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int maxIndex = i;
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] > arr[maxIndex]) {
+                maxIndex = j;
+            }
+        }
+        // Troca o elemento máximo encontrado com o elemento atual
+        int temp = arr[i];
+        arr[i] = arr[maxIndex];
+        arr[maxIndex] = temp;
+    }
+}
 
 
 //Função para criar os números aleatórios

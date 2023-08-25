@@ -38,8 +38,7 @@ void CopiarElementosDoVetor(int *vetorOriginal,int **vetorCopia ,int tamanhoDoVe
 
 int * inverte(int *vetor, int n);
 
-
-
+void revert(int arr[], int n);
 
 
 #endif
