@@ -7,7 +7,15 @@ int main(){
 
     //-************************************************ABERTURA DE ARQUIVO********************************************************-//
     FILE *arq= fopen("saidas.txt", "w");
+    FILE *csv_random= fopen("random.csv", "w");
+    FILE *csv_reverse= fopen("reverse.csv", "w");
+    FILE *csv_sorted= fopen("sorted.csv", "w");
+    FILE *csv_nearly= fopen("nearly.csv", "w");
     if(arq == NULL){
+        printf("Erro na criacao do documento TXT");
+        return 1;
+    }
+    if(csv_random == NULL || csv_reverse == NULL || csv_sorted == NULL || csv_nearly == NULL){
         printf("Erro na criacao do documento TXT");
         return 1;
     }
@@ -47,12 +55,13 @@ int main(){
     
     fprintf(arq, "[[RANDOM]]\n");
     fprintf(arq, "n\tSelection\tInsertion\tMerge\t\tHeap\t\tQuick\t\tCounting\n");
-
+    fprintf(csv_random, "n,Selection,Insertion,Merge,Heap,Quick,Counting\n");
 
     for(int w = inc; w <= fim; w += stp){
         printf("%d\t", w); // Imprime a quantidade de elementos no vetor
         fprintf(arq, "%d\t", w); // Imprime a quantidade de elementos no vetor
-        
+        fprintf(csv_random, "%d,", w); // Imprime a quantidade de elementos no vetor
+
         for(int n = 0; n < rpt; n++){
             // Alimenta o vetor com números Randômicos
             CriaVetorComElementosRandomicos(&vetor, &vetorOriginal, &w);
@@ -162,6 +171,12 @@ int main(){
        for(int i =0; i < 6; i++){
         printf("%.6f\t", tempos[i]/rpt);
         fprintf(arq, "%.6f\t", tempos[i]/rpt);
+        if(i < 5){
+            fprintf(csv_random, "%.6f,", tempos[i]/rpt);
+        }else{
+            fprintf(csv_random, "%.6f\n", tempos[i]/rpt);
+        }
+        
         tempos[i] = 0;
        }
        printf("\n");
@@ -183,12 +198,14 @@ int main(){
     
     fprintf(arq, "[[REVERSE]]\n");
     fprintf(arq, "n\tSelection\tInsertion\tMerge\t\tHeap\t\tQuick\t\tCounting\n");
+    fprintf(csv_reverse, "n,Selection,Insertion,Merge,Heap,Quick,Counting\n");
     
     //int *vetorInverso=NULL;
     
     for(int w = inc; w <= fim; w += stp){
         printf("%d\t", w); // Imprime a quantidade de elementos
         fprintf(arq, "%d\t", w); // Imprime a quantidade de elementos
+        fprintf(csv_reverse, "%d,", w); // Imprime a quantidade de elementos
         //printf("\nI. Endereco do vetor %p\n", vetor);
         //printf("I. Endereco do vetorOriginal %p\n", vetorOriginal);
 
@@ -303,6 +320,11 @@ int main(){
         
            printf("%.6f\t", tempos[i]/rpt);
             fprintf(arq, "%.6f\t", tempos[i]/rpt);
+            if(i < 5){
+                fprintf(csv_reverse, "%.6f,", tempos[i]/rpt);
+            }else{
+                fprintf(csv_reverse, "%.6f\n", tempos[i]/rpt);
+            }
             tempos[i] = 0;
         }
         printf("\n");
@@ -323,10 +345,12 @@ int main(){
 
     fprintf(arq, "[[SORTED]]\n");
     fprintf(arq, "n\tSelection\tInsertion\tMerge\t\tHeap\t\tQuick\t\tCounting\n");
+    fprintf(csv_sorted, "n,Selection,Insertion,Merge,Heap,Quick,Counting\n");
 
     for(int w = inc; w <= fim; w += stp){
         printf("%d\t", w); // Imprime a quantidade de elementos que estamos passando para o vetor
         fprintf(arq, "%d\t", w); // Imprime a quantidade de elementos que estamos passando para o vetor
+        fprintf(csv_sorted, "%d,", w); // Imprime a quantidade de elementos que estamos passando para o vetor        
 
 
         for(int n = 0; n < rpt; n++){
@@ -430,6 +454,11 @@ int main(){
         
             printf("%.6f\t", tempos[i]/rpt);
             fprintf(arq, "%.6f\t", tempos[i]/rpt);
+            if(i < 5){
+            fprintf(csv_sorted, "%.6f,", tempos[i]/rpt);
+        }else{
+            fprintf(csv_sorted, "%.6f\n", tempos[i]/rpt);
+        }
             tempos[i] = 0;
         }
         printf("\n");
@@ -450,6 +479,7 @@ int main(){
 
     fprintf(arq, "[[NEARLY SORTED]]\n");
     fprintf(arq, "n\tSelection\tInsertion\tMerge\t\tHeap\t\tQuick\t\tCounting\n");
+    fprintf(csv_nearly, "n,Selection,Insertion,Merge,Heap,Quick,Counting\n");
     /*
 
         
@@ -459,6 +489,7 @@ int main(){
     for(int w = inc; w <= fim; w += stp){
         printf("%d\t", w); // Imprime a quantidade de elementos que estamos passando para o vetor
         fprintf(arq, "%d\t", w); // Imprime a quantidade de elementos que estamos passando para o vetor
+        fprintf(csv_nearly, "%d,", w); // Imprime a quantidade de elementos que estamos passando para o vetor
 
 
         for(int n = 0; n < rpt; n++){
@@ -564,6 +595,11 @@ int main(){
         
             printf("%.6f\t", tempos[i]/rpt);
             fprintf(arq, "%.6f\t", tempos[i]/rpt);
+            if(i < 5){
+                fprintf(csv_nearly, "%.6f,", tempos[i]/rpt);
+            }else{
+                fprintf(csv_nearly, "%.6f\n", tempos[i]/rpt);
+            }
             tempos[i] = 0;
         }
         printf("\n");
@@ -574,7 +610,11 @@ int main(){
 
 
 
-     fclose(arq);
+    fclose(arq);
+    fclose(csv_random);
+    fclose(csv_reverse);
+    fclose(csv_sorted);
+    fclose(csv_nearly);
 
 
     return 0;
