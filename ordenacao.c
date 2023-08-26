@@ -304,8 +304,6 @@ int main(){
             tempos[i] = 0;
         }
         printf("\n");
-        //printf("\nPP. Endereco do vetor %p\n", vetor);
-        //printf("PP. Endereco do vetorOriginal %p\n", vetorOriginal);
         
     }
 
