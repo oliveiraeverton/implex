@@ -16,7 +16,7 @@ int main(){
         return 1;
     }
     if(csv_random == NULL || csv_reverse == NULL || csv_sorted == NULL || csv_nearly == NULL){
-        printf("Erro na criacao do documento TXT");
+        printf("Erro na criacao do documento CSV");
         return 1;
     }
     //-****************************************************************************************************************************-//
