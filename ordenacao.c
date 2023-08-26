@@ -65,8 +65,6 @@ int main(){
         for(int n = 0; n < rpt; n++){
             // Alimenta o vetor com números Randômicos
             CriaVetorComElementosRandomicos(&vetor, &vetorOriginal, &w);
-            //printf("\nI. Endereco do vetor %p\n", &vetor);
-            //printf("I. Endereco do vetorOriginal %p\n", &vetorOriginal);
 
             calculoDeTempo = 0;
             //-********** SELECTION-SORT *****************-//
@@ -79,8 +77,6 @@ int main(){
             elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
             calculoDeTempo += elapsed_time;
             CopiarElementosDoVetor(vetorOriginal, &vetor, w);
-            //printf("II. Endereco do vetor %p\n", &vetor);
-            //printf("II. Endereco do vetorOriginal %p\n", &vetorOriginal);
             tempos[0] = tempos[0] + calculoDeTempo;
 
 
@@ -153,14 +149,6 @@ int main(){
             CopiarElementosDoVetor(vetorOriginal, &vetor, w);
             tempos[5] = tempos[5] + calculoDeTempo;
 
-            //LARGE_INTEGER start_time, end_time, frequency;
-            //double timee;
-            //QueryPerformanceFrequency(&frequency); // Obter a frequência do contador
-            //QueryPerformanceCounter(&start_time); // Iniciar a contagem de tempo
-            //countingSort(vetor, w);
-            //QueryPerformanceCounter(&end_time); // Parar a contagem de tempo
-            //timee = (double)(end_time.QuadPart - start_time.QuadPart) / frequency.QuadPart;
-            //tempos[5] = tempos[5] + timee;
 
             free(vetor);
             free(vetorOriginal);
@@ -180,11 +168,7 @@ int main(){
         tempos[i] = 0;
        }
        printf("\n");
-        //printf("III. Endereco do vetor %p\n", &vetor);
-        //printf("III. Endereco do vetorOriginal %p\n", &vetorOriginal);
-       
-       //printf("IIII. Endereco do vetor %p\n", &vetor);
-        //printf("IIII. Endereco do vetorOriginal %p\n", &vetorOriginal);
+
     }
 
     printf("\n\n\n"); 
@@ -206,24 +190,19 @@ int main(){
         printf("%d\t", w); // Imprime a quantidade de elementos
         fprintf(arq, "%d\t", w); // Imprime a quantidade de elementos
         fprintf(csv_reverse, "%d,", w); // Imprime a quantidade de elementos
-        //printf("\nI. Endereco do vetor %p\n", vetor);
-        //printf("I. Endereco do vetorOriginal %p\n", vetorOriginal);
 
         for(int n = 0; n < rpt; n++){
             // Alimenta o vetor com números Randômicos
             CriaVetorComElementosRandomicos(&vetor, &vetorOriginal, &w);
-            //printf("\nII. Endereco do vetor %p\n", vetor);
-            //printf("II. Endereco do vetorOriginal %p\n", vetorOriginal);
+
             // Ordena o vetor 
             quickSort(vetor, 0, w-1);
             quickSort(vetorOriginal, 0, w-1);
-            //printf("\nIII. Endereco do vetor %p\n", vetor);
-            //printf("III. Endereco do vetorOriginal %p\n", vetorOriginal);
+
             // Inverte o vetor
             revert(vetor, w); 
             revert(vetorOriginal, w); 
-            //printf("\nIV. Endereco do vetor %p\n", vetor);
-            //printf("IV. Endereco do vetorOriginal %p\n", vetorOriginal);
+
             
             calculoDeTempo = 0;
             //-********** SELECTION-SORT *****************-//
@@ -237,8 +216,7 @@ int main(){
             calculoDeTempo += elapsed_time;
             tempos[0] = tempos[0] + calculoDeTempo;
             CopiarElementosDoVetor(vetorOriginal, &vetor, w);
-            //printf("\nV. Endereco do vetor %p\n", vetor);
-            //printf("V. Endereco do vetorOriginal %p\n", vetorOriginal);
+
 
             calculoDeTempo = 0;
             //-********** INSERTION-SORT *****************-//
