@@ -20,6 +20,35 @@ void swap(int *a, int *b) {
     *a = *b;
     *b = temp;
 }
+void semiEmbaralha(int arrOrig[], int arr[], int n){
+
+    int porcentagem_embaralha = n*0.10;
+
+    srand(time(NULL));
+
+    for( int i =0; i < porcentagem_embaralha; i++){
+
+        
+        int w = rand() % 1000;
+        arrOrig[i] = w;
+        arr[i] = w;
+    }
+
+}
+void revert(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int maxIndex = i;
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] > arr[maxIndex]) {
+                maxIndex = j;
+            }
+        }
+        // Troca o elemento máximo encontrado com o elemento atual
+        int temp = arr[i];
+        arr[i] = arr[maxIndex];
+        arr[maxIndex] = temp;
+    }
+}
 
 void selectionSort(int arr[], int n){
     for (int i = 0; i < n - 1; i++) {

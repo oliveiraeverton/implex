@@ -38,6 +38,9 @@ void CopiarElementosDoVetor(int *vetorOriginal,int **vetorCopia ,int tamanhoDoVe
 
 int * inverte(int *vetor, int n);
 
+void semiEmbaralha(int arrOrig[], int arr[], int n);
+
+void revert(int arr[], int n);
 
 
 
