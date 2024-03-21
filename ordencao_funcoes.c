@@ -15,6 +15,7 @@ void insertionSort(int arr[], int n) {
         arr[j + 1] = key;
     }
 }
+
 void swap(int *a, int *b) {
     int temp = *a;
     *a = *b;
@@ -207,8 +208,7 @@ void revert(int arr[], int n) {
 
 //Função para criar os números aleatórios
 void CriaVetorComElementosRandomicos(int **vetorParaOrdenacao, int **vetorOriginal,int *n){
-    // Inicializar o gerador de números randômicos com um valor de semente
-    srand(time(NULL));
+    
     //*n = 500;
     // Alocar memória para o vetor
     *vetorParaOrdenacao = (int *)malloc(*n * sizeof(int));
