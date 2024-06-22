@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include"ordenacao.h"
 
+
 int main(){
 
     //-************************************************ABERTURA DE ARQUIVO********************************************************-//
@@ -11,6 +12,8 @@ int main(){
     FILE *csv_reverse= fopen("reverse.csv", "w");
     FILE *csv_sorted= fopen("sorted.csv", "w");
     FILE *csv_nearly= fopen("nearly.csv", "w");
+    // Inicializar o gerador de números randômicos com um valor de semente
+    srand(time(NULL));
     if(arq == NULL){
         printf("Erro na criacao do documento TXT");
         return 1;
@@ -20,6 +23,7 @@ int main(){
         return 1;
     }
     //-****************************************************************************************************************************-//
+
 
 
     //-********************************************   DECLARAÇÃO DE VARIÁVEIS ******************************************************-//
